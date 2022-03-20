@@ -1,11 +1,14 @@
 package com.summer.melisma.model;
 
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,6 +17,8 @@ import java.util.UUID;
 @Builder
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class MusicEntity {
 
     @Id
@@ -32,16 +37,19 @@ public class MusicEntity {
     @Column(name = "views")
     private Integer views;
 
+    @CreatedDate
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-
+    @CreatedBy
     @Type(type = "uuid-char")
     @Column(name = "created_by")
     private UUID createdBy;
+
 
 
     public static MusicEntity toEntity(MusicDto dto) {
