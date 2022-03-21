@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,7 +20,8 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MusicEntity {
+@Table(name="musics")
+public class MusicEntity extends TimeStampEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,13 +39,13 @@ public class MusicEntity {
     @Column(name = "views")
     private Integer views;
 
-    @CreatedDate
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+//    @CreatedDate
+//    @Column(name = "created_at")
+//    private LocalDateTime createdAt;
+//
+//    @LastModifiedDate
+//    @Column(name = "updated_at")
+//    private LocalDateTime updatedAt;
 
     @CreatedBy
     @Type(type = "uuid-char")
@@ -56,8 +58,8 @@ public class MusicEntity {
         MusicEntity entity = MusicEntity.builder()
                 .id(dto.getId())
                 .musicUrl(dto.getMusicUrl())
-                .createdAt(dto.getCreatedAt())
-                .updatedAt(dto.getUpdatedAt())
+//                .createdAt(dto.getCreatedAt())
+//                .updatedAt(dto.getUpdatedAt())
                 .createdBy(dto.getCreatedBy())
                 .build();
 
