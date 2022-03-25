@@ -30,6 +30,7 @@ public class MusicVo {
     
 //    public static MusicVo(MusicDto, LikeDto){}
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,5 +47,17 @@ public class MusicVo {
     @Override
     public int hashCode() {
         return Objects.hash(id, musicUrl, views, createdAt, updatedAt, createdBy);
+    }
+
+    public static MusicVo toVo(MusicDto dto) {
+        MusicVo toVo = MusicVo.builder()
+                .id(dto.getId())
+                .musicUrl(dto.getMusicUrl())
+                .createdAt(dto.getCreatedAt())
+                .updatedAt(dto.getUpdatedAt())
+                .createdBy(dto.getCreatedBy())
+                .build();
+
+        return toVo;
     }
 }

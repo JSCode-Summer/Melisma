@@ -19,6 +19,8 @@ public class MusicController {
 
     @PostMapping
     public ResponseEntity create(@RequestBody MusicDto dto){
-        return ResponseEntity.ok(musicService.create(dto));
+        MusicVo vo = musicService.create(dto);
+        return ResponseEntity.ok(vo);
+    }
     }
 }
