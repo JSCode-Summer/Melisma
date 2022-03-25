@@ -9,7 +9,6 @@ import com.summer.melisma.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,11 +20,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-@Transactional
+//@Transactional
 public class MusicServiceTest {
 
     @Autowired
-    MusicRepository musicRepository;
+    MusicService musicService;
 
     @Autowired
     UserRepository userRepository;
@@ -37,22 +36,19 @@ public class MusicServiceTest {
 
         User user = userRepository.findByCid(100l).get();
         UUID id = UUID.randomUUID();
-//        MusicEntity music = new MusicEntity(100, id, "",0, null, null, user.getId());
-        MusicEntity music = MusicEntity.builder()
-                .cid(100)
+        MusicDto musicDto = MusicDto.builder()
                 .id(id)
                 .musicUrl("")
                 .views(0)
                 .createdBy(user.getId()).build();
-//        music.setCid(1);
-//        music.setId(UUID.randomUUID());
-        musicRepository.save(music);
+
+        musicService.create(musicDto);
 
         //when
-        List<MusicEntity> musics = musicRepository.findAll();
+        List<MusicVo> musics = musicService.readAll();
 
         //then
-        MusicEntity firstMusic = musics.get(0);
+        MusicVo firstMusic = musics.get(0);
 
         System.out.println(">>>>> createDate = " + firstMusic.getCreatedAt() + ", modifiedDate = " + firstMusic.getUpdatedAt());
         assertNotNull(firstMusic.getCreatedAt());
