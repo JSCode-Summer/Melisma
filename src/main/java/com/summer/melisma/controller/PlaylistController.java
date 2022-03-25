@@ -1,10 +1,16 @@
 package com.summer.melisma.controller;
 
+import java.util.List;
+import java.util.UUID;
+
 import com.summer.melisma.model.dto.PlaylistDto;
+import com.summer.melisma.model.vo.PlaylistVo;
 import com.summer.melisma.service.PlaylistService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +29,20 @@ public class PlaylistController {
         playlistService.create(dto);
 
         // TODO :: 리턴값 수정해야 함
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
+
+    @GetMapping("/searchList")
+    public ResponseEntity<?> searchList() {
+        List<PlaylistVo> vos = playlistService.searchList();
+
+        return new ResponseEntity<>(vos, HttpStatus.OK);
+    }
+
+    @GetMapping("/search/{id}")
+    public ResponseEntity<?> search(@PathVariable UUID id) {
+        PlaylistVo vo = playlistService.search(id);
+
+        return new ResponseEntity<>(vo, HttpStatus.OK);
     }
 }
