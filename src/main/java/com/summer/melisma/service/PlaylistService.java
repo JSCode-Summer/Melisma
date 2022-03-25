@@ -68,4 +68,23 @@ public class PlaylistService {
             throw new NullPointerException();
         }
     }
+
+    /**
+     * <b></b>
+     * <p>
+     * 
+     * @param id : UUID
+     * @see PlaylistRepository#findById
+     * @see PlatlistRepository#delete
+     * @throws NullPointerException
+     */
+    public void delete(UUID id) {
+        Optional<PlaylistEntity> entityOpt = playlistRepository.findById(id);
+
+        if(entityOpt.isPresent()) {
+            playlistRepository.delete(entityOpt.get());
+        }else {
+            throw new NullPointerException();
+        }
+    }
 }
