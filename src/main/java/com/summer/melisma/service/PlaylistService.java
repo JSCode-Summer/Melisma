@@ -79,12 +79,8 @@ public class PlaylistService {
      * @throws NullPointerException
      */
     public void delete(UUID id) {
-        Optional<PlaylistEntity> entityOpt = playlistRepository.findById(id);
-
-        if(entityOpt.isPresent()) {
-            playlistRepository.delete(entityOpt.get());
-        }else {
-            throw new NullPointerException();
-        }
+        playlistRepository.findById(id).ifPresent(entity -> {
+            playlistRepository.delete(entity);
+        });
     }
 }
