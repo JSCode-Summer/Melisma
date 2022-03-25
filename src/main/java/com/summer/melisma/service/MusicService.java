@@ -7,6 +7,8 @@ import com.summer.melisma.repository.MusicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 @Service
 public class MusicService {
@@ -22,5 +24,14 @@ public class MusicService {
 
         return vo;
     }
+
+    public List<MusicVo> readAll(){
+        List<MusicEntity> entities = musicRepository.findAll();
+        List<MusicVo> vos = new ArrayList<>();
+        for (MusicEntity entity: entities){
+            vos.add(MusicVo.toVo(MusicDto.toDto(entity)));
+        }
+
+        return vos;
     }
 }
