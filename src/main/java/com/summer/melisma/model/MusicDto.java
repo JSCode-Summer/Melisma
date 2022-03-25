@@ -34,6 +34,7 @@ public class MusicDto {
         MusicDto dto = MusicDto.builder()
                 .id(entity.getId())
                 .musicUrl(entity.getMusicUrl())
+                .views(entity.getViews())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .createdBy(entity.getCreatedBy())
