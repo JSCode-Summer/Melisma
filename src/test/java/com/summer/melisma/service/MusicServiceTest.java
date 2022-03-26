@@ -3,9 +3,9 @@ package com.summer.melisma.service;
 import com.summer.melisma.model.MusicDto;
 import com.summer.melisma.model.MusicEntity;
 import com.summer.melisma.model.MusicVo;
-import com.summer.melisma.model.User;
+//import com.summer.melisma.model.User;
 import com.summer.melisma.repository.MusicRepository;
-import com.summer.melisma.repository.UserRepository;
+//import com.summer.melisma.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,23 +26,23 @@ public class MusicServiceTest {
     @Autowired
     MusicService musicService;
 
-    @Autowired
-    UserRepository userRepository;
+    // @Autowired
+    // UserRepository userRepository;
 
     @Test
     public void timeStampAnnotationTest() {
         //given
         LocalDateTime now = LocalDateTime.of(2022, 03, 20, 0, 0, 0);
 
-        User user = userRepository.findByCid(100l).get();
-        UUID id = UUID.randomUUID();
-        MusicDto musicDto = MusicDto.builder()
-                .id(id)
-                .musicUrl("")
-                .views(0)
-                .createdBy(user.getId()).build();
+        // User user = userRepository.findByCid(100l).get();
+        // UUID id = UUID.randomUUID();
+        // MusicDto musicDto = MusicDto.builder()
+        //         .id(id)
+        //         .musicUrl("")
+        //         .views(0)
+        //         .createdBy(user.getId()).build();
 
-        musicService.create(musicDto);
+        // musicService.create(musicDto);
 
         //when
         List<MusicVo> musics = musicService.readAll();
@@ -59,20 +59,20 @@ public class MusicServiceTest {
 
     @Test
     public void 전체_조회_테스트() {
-        //given
-        User user = userRepository.findByCid(100l).get();
+        // //given
+        // User user = userRepository.findByCid(100l).get();
 
         //3개의 음악 저장
-        for (int i = 0; i < 3; i++) {
-            UUID id = UUID.randomUUID();
-            MusicDto musicDto = MusicDto.builder()
-                    .id(id)
-                    .musicUrl("")
-                    .views(0)
-                    .createdBy(user.getId()).build();
+        // for (int i = 0; i < 3; i++) {
+        //     UUID id = UUID.randomUUID();
+        //     MusicDto musicDto = MusicDto.builder()
+        //             .id(id)
+        //             .musicUrl("")
+        //             .views(0)
+        //             .createdBy(user.getId()).build();
 
-            musicService.create(musicDto);
-        }
+        //     musicService.create(musicDto);
+        // }
 
         //when
         List<MusicVo> vos = musicService.readAll();
