@@ -42,16 +42,28 @@ public class PlaylistController {
 
     @GetMapping("/search/{id}")
     public ResponseEntity<?> search(@PathVariable UUID id) {
-        PlaylistVo vo = playlistService.search(id);
+        PlaylistVo vo = new PlaylistVo();
+        
+        try{
+            vo = playlistService.search(id);
+        } catch (NullPointerException e) {
+            vo = null;
+        }
 
         return new ResponseEntity<>(vo, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id) {
-        playlistService.delete(id);
+        String message = "success";
 
-        return new ResponseEntity<>("success", HttpStatus.OK);
+        try {
+            playlistService.delete(id);
+        } catch (NullPointerException e) {
+            message = "not found";
+        }
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
 }
