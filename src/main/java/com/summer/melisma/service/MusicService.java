@@ -34,4 +34,8 @@ public class MusicService {
 
         return vos;
     }
+    public MusicVo readOne(UUID id){
+        MusicEntity entity = musicRepository.findById(id).get();
+        return MusicVo.toVo(MusicDto.toDto(entity));
+    }
 }
