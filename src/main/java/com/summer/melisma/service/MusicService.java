@@ -38,4 +38,8 @@ public class MusicService {
         MusicEntity entity = musicRepository.findById(id).get();
         return MusicVo.toVo(MusicDto.toDto(entity));
     }
+
+    public void delete(UUID id){
+        musicRepository.deleteById(id);
+    }
 }

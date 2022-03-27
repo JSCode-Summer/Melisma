@@ -37,4 +37,14 @@ public class MusicController {
         return ResponseEntity.ok(vo);
 
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity delete(@PathVariable UUID id){
+        musicService.delete(id);
+
+        return ResponseEntity.ok("Music is deleted");
+    }
+
+
+
 }
