@@ -19,13 +19,13 @@ public class MusicController {
     @Autowired
     private MusicService musicService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity create(@RequestBody MusicDto dto){
         MusicVo vo = musicService.create(dto);
         return ResponseEntity.ok(vo);
     }
 
-    @GetMapping
+    @GetMapping("/readAll")
     public ResponseEntity readAll(){
         List<MusicVo> vos = musicService.readAll();
         return ResponseEntity.ok(vos);
