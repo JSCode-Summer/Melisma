@@ -23,6 +23,9 @@ public class CommentDto {
     private UUID id;
 
     @Setter
+    private StringBuilder content;
+
+    @Setter 
     private UUID musicId;
 
     @Setter
@@ -37,8 +40,10 @@ public class CommentDto {
     public static CommentDto toEntity(CommentEntity entity) {
         CommentDto dto = CommentDto.builder()
             .id(entity.getId())
+            .content(entity.getContent())
             .musicId(entity.getMusicId())
             .createdAt(entity.getCreatedAt())
+            .updatedAt(entity.getUpdatedAt())
             .createdBy(entity.getCreatedBy())
             .build();
 

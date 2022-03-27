@@ -42,6 +42,13 @@ public class CommentEntity {
     @Column(name = "id")
     private UUID id;
 
+
+    @Setter
+    @Type(type ="text")
+    @Column(name="content",columnDefinition = "TEXT")
+    private StringBuilder content;
+
+
     @Setter
     @Type(type = "uuid-char")
     @Column(name = "music_id")
@@ -50,6 +57,11 @@ public class CommentEntity {
     @Setter
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @Setter
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+    
     
     @Setter
     // @ManyToOne
@@ -60,8 +72,10 @@ public class CommentEntity {
     public static CommentEntity toEntity(CommentDto dto) {
         CommentEntity entity = CommentEntity.builder()
             .id(dto.getId())
+            .content(dto.getContent())
             .musicId(dto.getMusicId())
             .createdAt(dto.getCreatedAt())
+            .updatedAt(dto.getUpdatedAt())
             .createdBy(dto.getCreatedBy())
             .build();
 
