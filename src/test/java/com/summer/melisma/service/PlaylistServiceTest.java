@@ -36,16 +36,16 @@ public class PlaylistServiceTest {
     @Autowired
     private PlaylistService playlistService;
 
-    @InjectMocks
-    private PlaylistService mockPlaylistService;
+    // @InjectMocks
+    // private PlaylistService mockPlaylistService;
 
-    @MockBean
-    private PlaylistRepository mockPlaylistRepository;
+    // @MockBean
+    // private PlaylistRepository mockPlaylistRepository;
 
-    @BeforeEach
-    public void init() {
-        MockitoAnnotations.openMocks(this);
-    }
+    // @BeforeEach
+    // public void init() {
+    //     MockitoAnnotations.openMocks(this);
+    // }
 
     @Test
     @DisplayName("플레이리스트 단일 생성")
@@ -135,12 +135,82 @@ public class PlaylistServiceTest {
         }
     }
 
+    // @Test
+    // @DisplayName("플레이리스트 전체 조회")
+    // void 플레이리스트_전체조회() {
+    //     // given
+    //     List<PlaylistEntity> entities = new ArrayList<>();
+    //     // Playlist1
+    //     List<DetailDto> details = new ArrayList<>();
+        
+    //     for(int i = 0; i < 3; i++) {
+    //         UUID detailId = UUID.randomUUID();
+    //         UUID musicId = UUID.randomUUID();
+
+    //         DetailDto detail = DetailDto.builder()
+    //             .id(detailId)
+    //             .musicId(musicId)
+    //             .build();
+
+    //         details.add(detail);
+    //     }
+
+    //     PlaylistDetailDto playlistDetail1 = PlaylistDetailDto.builder().details(details).build();
+
+    //     UUID playlistId = UUID.randomUUID();
+    //     UUID userId = UUID.randomUUID();
+
+    //     PlaylistEntity playlistEntity1 = PlaylistEntity.builder()
+    //         .id(playlistId)
+    //         .playlistDetail(playlistDetail1)
+    //         .createdAt(LocalDateTime.now())
+    //         .updatedAt(null)
+    //         .createdBy(userId)
+    //         .build();
+        
+    //     entities.add(playlistEntity1);
+
+    //     // Playlist2
+    //     details = new ArrayList<>();
+        
+    //     for(int i = 0; i < 3; i++) {
+    //         UUID detailId = UUID.randomUUID();
+    //         UUID musicId = UUID.randomUUID();
+
+    //         DetailDto detail = DetailDto.builder()
+    //             .id(detailId)
+    //             .musicId(musicId)
+    //             .build();
+
+    //         details.add(detail);
+    //     }
+
+    //     PlaylistDetailDto playlistDetail2 = PlaylistDetailDto.builder().details(details).build();
+
+    //     UUID playlistId2 = UUID.randomUUID();
+
+    //     PlaylistEntity playlistEntity2 = PlaylistEntity.builder()
+    //         .id(playlistId2)
+    //         .playlistDetail(playlistDetail2)
+    //         .createdAt(LocalDateTime.now())
+    //         .updatedAt(null)
+    //         .createdBy(userId)
+    //         .build();
+
+    //     entities.add(playlistEntity2);
+
+    //     // when
+    //     Mockito.when(mockPlaylistRepository.findAll()).thenReturn(entities);
+    //     List<PlaylistVo> results = playlistService.searchList();
+
+    //     // then
+    //     Assertions.assertThat(results.size()).isEqualTo(2);
+    // }
+
     @Test
-    @DisplayName("플레이리스트 전체 조회")
-    void 플레이리스트_전체조회() {
+    @DisplayName("플레이리스트 단일 삭제")
+    void 플레이리스트_단일삭제() {
         // given
-        List<PlaylistEntity> entities = new ArrayList<>();
-        // Playlist1
         List<DetailDto> details = new ArrayList<>();
         
         for(int i = 0; i < 3; i++) {
@@ -155,55 +225,30 @@ public class PlaylistServiceTest {
             details.add(detail);
         }
 
-        PlaylistDetailDto playlistDetail1 = PlaylistDetailDto.builder().details(details).build();
+        PlaylistDetailDto playlistDetail = PlaylistDetailDto.builder().details(details).build();
 
         UUID playlistId = UUID.randomUUID();
         UUID userId = UUID.randomUUID();
 
-        PlaylistEntity playlistEntity1 = PlaylistEntity.builder()
+        PlaylistEntity playlistEntity = PlaylistEntity.builder()
             .id(playlistId)
-            .playlistDetail(playlistDetail1)
+            .playlistDetail(playlistDetail)
             .createdAt(LocalDateTime.now())
             .updatedAt(null)
             .createdBy(userId)
             .build();
-        
-        entities.add(playlistEntity1);
-
-        // Playlist2
-        details = new ArrayList<>();
-        
-        for(int i = 0; i < 3; i++) {
-            UUID detailId = UUID.randomUUID();
-            UUID musicId = UUID.randomUUID();
-
-            DetailDto detail = DetailDto.builder()
-                .id(detailId)
-                .musicId(musicId)
-                .build();
-
-            details.add(detail);
-        }
-
-        PlaylistDetailDto playlistDetail2 = PlaylistDetailDto.builder().details(details).build();
-
-        UUID playlistId2 = UUID.randomUUID();
-
-        PlaylistEntity playlistEntity2 = PlaylistEntity.builder()
-            .id(playlistId2)
-            .playlistDetail(playlistDetail2)
-            .createdAt(LocalDateTime.now())
-            .updatedAt(null)
-            .createdBy(userId)
-            .build();
-
-        entities.add(playlistEntity2);
 
         // when
-        Mockito.when(mockPlaylistRepository.findAll()).thenReturn(entities);
-        List<PlaylistVo> results = playlistService.searchList();
+        playlistRepository.save(playlistEntity);
+        Optional<PlaylistEntity> playlistOpt = playlistRepository.findById(playlistId);
+        Assertions.assertThat(playlistOpt.get().getId()).isEqualTo(playlistId);
+
+        // when
+        playlistService.delete(playlistId);
 
         // then
-        Assertions.assertThat(results.size()).isEqualTo(2);
+        org.junit.jupiter.api.Assertions.assertThrows(NullPointerException.class,
+        () -> playlistService.search(playlistId));
     }
+    
 }
