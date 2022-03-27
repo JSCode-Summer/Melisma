@@ -86,4 +86,15 @@ public class MusicServiceTest {
         }
     }
 
+    public MusicVo createForTest(){
+        User user = userRepository.findByCid(100l).get();
+        UUID id = UUID.randomUUID();
+        MusicDto musicDto = MusicDto.builder()
+                .id(id)
+                .musicUrl("")
+                .views(0)
+                .createdBy(user.getId()).build();
+
+        return musicService.create(musicDto);
+    }
 }
