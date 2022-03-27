@@ -1,5 +1,6 @@
-package com.summer.melisma.model;
+package com.summer.melisma.model.vo;
 
+import com.summer.melisma.model.dto.MusicDto;
 import lombok.Builder;
 import lombok.Data;
 

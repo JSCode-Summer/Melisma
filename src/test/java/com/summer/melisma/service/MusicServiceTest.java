@@ -1,10 +1,8 @@
 package com.summer.melisma.service;
 
-import com.summer.melisma.model.MusicDto;
-import com.summer.melisma.model.MusicEntity;
-import com.summer.melisma.model.MusicVo;
-import com.summer.melisma.model.User;
-import com.summer.melisma.repository.MusicRepository;
+import com.summer.melisma.model.dto.MusicDto;
+import com.summer.melisma.model.vo.MusicVo;
+import com.summer.melisma.model.entity.UserEntity;
 import com.summer.melisma.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -103,13 +99,13 @@ public class MusicServiceTest {
 
 
     public MusicVo createForTest(){
-        User user = userRepository.findByCid(100l).get();
+        UserEntity userEntity = userRepository.findByCid(100l).get();
         UUID id = UUID.randomUUID();
         MusicDto musicDto = MusicDto.builder()
                 .id(id)
                 .musicUrl("")
                 .views(0)
-                .createdBy(user.getId()).build();
+                .createdBy(userEntity.getId()).build();
 
         return musicService.create(musicDto);
     }

@@ -1,4 +1,4 @@
-package com.summer.melisma.model;
+package com.summer.melisma.model.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

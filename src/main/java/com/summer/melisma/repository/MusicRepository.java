@@ -1,6 +1,6 @@
 package com.summer.melisma.repository;
 
-import com.summer.melisma.model.MusicEntity;
+import com.summer.melisma.model.entity.MusicEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

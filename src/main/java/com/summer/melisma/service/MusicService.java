@@ -1,8 +1,8 @@
 package com.summer.melisma.service;
 
-import com.summer.melisma.model.MusicDto;
-import com.summer.melisma.model.MusicEntity;
-import com.summer.melisma.model.MusicVo;
+import com.summer.melisma.model.dto.MusicDto;
+import com.summer.melisma.model.entity.MusicEntity;
+import com.summer.melisma.model.vo.MusicVo;
 import com.summer.melisma.repository.MusicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

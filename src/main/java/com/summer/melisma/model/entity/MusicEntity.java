@@ -1,18 +1,12 @@
-package com.summer.melisma.model;
+package com.summer.melisma.model.entity;
 
 
+import com.summer.melisma.model.dto.MusicDto;
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Builder
@@ -21,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="musics")
-public class MusicEntity extends TimeStampEntity{
+public class MusicEntity extends TimeStampEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
