@@ -34,6 +34,7 @@ public class MusicService {
 
         return vos;
     }
+
     public MusicVo readOne(UUID id){
         MusicEntity entity = musicRepository.findById(id).get();
         return MusicVo.toVo(MusicDto.toDto(entity));
@@ -41,5 +42,9 @@ public class MusicService {
 
     public void delete(UUID id){
         musicRepository.deleteById(id);
+    }
+
+    public boolean isEmpty(UUID id){
+        return musicRepository.findById(id).isEmpty();
     }
 }

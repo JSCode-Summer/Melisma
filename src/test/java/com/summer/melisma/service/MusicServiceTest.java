@@ -9,6 +9,7 @@ import com.summer.melisma.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-//@Transactional
+@Transactional
 public class MusicServiceTest {
 
     @Autowired
@@ -29,20 +30,13 @@ public class MusicServiceTest {
     @Autowired
     UserRepository userRepository;
 
+
+
     @Test
-    public void timeStampAnnotationTest() {
+    public void 생성_테스트() {
         //given
         LocalDateTime now = LocalDateTime.of(2022, 03, 20, 0, 0, 0);
-
-        User user = userRepository.findByCid(100l).get();
-        UUID id = UUID.randomUUID();
-        MusicDto musicDto = MusicDto.builder()
-                .id(id)
-                .musicUrl("")
-                .views(0)
-                .createdBy(user.getId()).build();
-
-        musicService.create(musicDto);
+        MusicVo vo = createForTest();
 
         //when
         List<MusicVo> musics = musicService.readAll();
@@ -60,18 +54,9 @@ public class MusicServiceTest {
     @Test
     public void 전체_조회_테스트() {
         //given
-        User user = userRepository.findByCid(100l).get();
-
         //3개의 음악 저장
         for (int i = 0; i < 3; i++) {
-            UUID id = UUID.randomUUID();
-            MusicDto musicDto = MusicDto.builder()
-                    .id(id)
-                    .musicUrl("")
-                    .views(0)
-                    .createdBy(user.getId()).build();
-
-            musicService.create(musicDto);
+            createForTest();
         }
 
         //when
@@ -85,6 +70,37 @@ public class MusicServiceTest {
             assertThat(vo).isNotNull();
         }
     }
+
+    @Test
+    public void 단일_조회_테스트(){
+        //given
+        MusicVo vo = createForTest();
+
+        //when
+        MusicVo findVo = musicService.readOne(vo.getId());
+
+        //then
+        System.out.println(">>>>> vo createdBy = " + vo.getCreatedBy());
+        System.out.println(">>>>> findVo createdBy = " + findVo.getCreatedBy());
+        assertThat(findVo.getCreatedBy()).isEqualTo(vo.getCreatedBy());
+
+    }
+
+
+
+    @Test
+    public void 삭제_테스트(){
+        //given
+        MusicVo vo = createForTest();
+        UUID id = vo.getId();
+
+        //when
+        musicService.delete(id);
+
+        //then
+        assertThat(musicService.isEmpty(id));
+    }
+
 
     public MusicVo createForTest(){
         User user = userRepository.findByCid(100l).get();
