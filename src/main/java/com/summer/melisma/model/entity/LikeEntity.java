@@ -27,7 +27,6 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-// @ToString(exclude = {"createdBy"})
 @ToString
 @Accessors(chain = true)
 @Table(name = "likes")
