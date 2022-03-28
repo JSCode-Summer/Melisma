@@ -38,6 +38,12 @@ public class CommentController {
 
         return new ResponseEntity<>(vos, HttpStatus.OK);
     }
+    @GetMapping("/searchList/{musicId}")
+    public ResponseEntity<?> searchList(@PathVariable UUID musicId) {
+        List<CommentVo> vos = commentService.searchListByMusicId(musicId);
+
+        return new ResponseEntity<>(vos, HttpStatus.OK);
+    }
     @GetMapping("/search/{id}")
     public ResponseEntity<?> search(@PathVariable UUID id) {
         CommentVo vo = new CommentVo();

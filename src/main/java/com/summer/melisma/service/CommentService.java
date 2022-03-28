@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.summer.melisma.model.dto.CommentDto;
 import com.summer.melisma.model.entity.CommentEntity;
@@ -35,8 +36,19 @@ public class CommentService {
         commentRepository.save(entity);
     }
 
+    
+    public List<CommentVo> searchListByMusicId(UUID musicId) {
+        List<CommentEntity> entities = commentRepository.findByMusicId(musicId);
+
+        if(entities.isEmpty()) {
+            return entities.stream().map(entity -> CommentVo.toVo(entity)).collect(Collectors.toList());
+        }else {
+            throw new NullPointerException();
+        }
+    }
     public List<CommentVo> searchList() {
-        return null;
+        List<CommentEntity> entities = commentRepository.findAll();
+        return entities.stream().map(entity -> CommentVo.toVo(entity)).collect(Collectors.toList());
     }
 
     public CommentVo search(UUID id) {
@@ -58,4 +70,5 @@ public class CommentService {
             throw new NullPointerException();
         }
     }
+
 }
