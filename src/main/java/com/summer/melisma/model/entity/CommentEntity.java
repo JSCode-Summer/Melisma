@@ -46,7 +46,7 @@ public class CommentEntity {
     @Setter
     @Type(type ="text")
     @Column(name="content",columnDefinition = "TEXT")
-    private StringBuilder content;
+    private String content;
 
 
     @Setter

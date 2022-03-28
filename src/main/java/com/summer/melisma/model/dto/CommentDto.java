@@ -20,10 +20,11 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentDto {
+    @Setter
     private UUID id;
 
     @Setter
-    private StringBuilder content;
+    private String content;
 
     @Setter 
     private UUID musicId;

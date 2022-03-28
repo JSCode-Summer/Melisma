@@ -11,8 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -65,6 +67,56 @@ public class CommentController {
         } catch (NullPointerException e) {
             message = "not found";
         }
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable UUID id, @RequestBody CommentDto dto) {
+        CommentVo vo = new CommentVo();
+        String message = "success";
+        try{
+            vo = commentService.search(id);
+            if(vo.getCreatedBy().equals(dto.getCreatedBy())){
+                commentService.update(id,dto);
+               
+            }else{
+                message = "no atuthentification";
+            }
+        } catch (NullPointerException e) {
+            vo = null;
+        }
+
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<?> updatePart(@PathVariable UUID id, @RequestBody CommentDto dto) {
+        CommentVo vo = new CommentVo();
+        String message = "success";
+        try{
+            vo = commentService.search(id);
+            if(vo.getCreatedBy().equals(dto.getCreatedBy())){
+                if(dto.getCreatedAt()==null){
+                    dto.setCreatedAt(vo.getCreatedAt());
+                }
+                if(dto.getContent().isEmpty()|| dto.getContent()==null){
+                    dto.setContent(vo.getContent());
+                }
+                if(dto.getMusicId()==null){
+                    dto.setMusicId(vo.getMusicId());
+                }
+                if(dto.getUpdatedAt()==null){
+                    dto.setUpdatedAt(vo.getUpdatedAt());
+                }
+                commentService.update(id,dto);
+               
+            }else{
+                message = "no atuthentification";
+            }
+        } catch (NullPointerException e) {
+            vo = null;
+        }
+
 
         return new ResponseEntity<>(message, HttpStatus.OK);
     }

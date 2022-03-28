@@ -71,4 +71,15 @@ public class CommentService {
         }
     }
 
+
+    public void update(UUID id, CommentDto dto) {
+        dto.setId(id);
+        CommentEntity entity = CommentEntity.toEntity(dto);
+        entity.setUpdatedAt(LocalDateTime.now());
+
+        commentRepository.save(entity);
+
+    }
+
+
 }

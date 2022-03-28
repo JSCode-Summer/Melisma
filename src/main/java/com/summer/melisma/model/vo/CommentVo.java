@@ -8,10 +8,11 @@ import com.summer.melisma.model.entity.CommentEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +20,7 @@ public class CommentVo {
     private UUID id;
 
     @Setter 
-    private StringBuilder content;
+    private String content;
 
     @Setter 
     private UUID musicId;
