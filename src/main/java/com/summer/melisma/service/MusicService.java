@@ -16,11 +16,13 @@ public class MusicService {
     @Autowired
     MusicRepository musicRepository;
 
+    @Autowired
+    MusicMapper musicMapper;
     public MusicVo create(MusicDto dto){
         MusicEntity entity = MusicEntity.toEntity(dto);
         musicRepository.save(entity);
 
-        MusicVo vo = MusicVo.toVo(dto);
+        MusicVo vo = MusicVo.toVo(MusicDto.toDto(entity));
 
         return vo;
     }
