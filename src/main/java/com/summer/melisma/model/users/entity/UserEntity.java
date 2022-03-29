@@ -1,6 +1,10 @@
 package com.summer.melisma.model.users.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -13,6 +17,9 @@ import javax.persistence.Table;
 import com.summer.melisma.model.users.dto.UserDto;
 
 import org.hibernate.annotations.Type;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +35,8 @@ import lombok.ToString;
 @Getter
 @ToString
 @Table(name = "users")
-public class UserEntity {
+public class UserEntity implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cid")
@@ -52,6 +60,10 @@ public class UserEntity {
     private UUID salt;
 
     @Setter
+    @Column(name = "role")
+    private String role;
+
+    @Setter
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -65,10 +77,51 @@ public class UserEntity {
             .username(dto.getUsername())
             .password(dto.getPassword())
             .salt(dto.getSalt())
+            .role(dto.getRole())
             .createdAt(dto.getCreatedAt())
             .updatedAt(dto.getUpdatedAt())
             .build();
 
         return entity;
+    }
+
+    public UserEntity(String username, String password, String role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // TODO Auto-generated method stub
+        Set<GrantedAuthority> roles = new HashSet<>();
+        for (String role : role.split(",")) {
+            roles.add(new SimpleGrantedAuthority(role));
+        }
+        return roles;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        // TODO Auto-generated method stub
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        // TODO Auto-generated method stub
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        // TODO Auto-generated method stub
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        // TODO Auto-generated method stub
+        return true;
     }
 }

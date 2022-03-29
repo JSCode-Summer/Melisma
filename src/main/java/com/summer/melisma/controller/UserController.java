@@ -23,7 +23,7 @@ public class UserController {
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody LoginReqUserDto reqDto) {
         String message = "success";
-
+        
         try{
             userService.create(reqDto);
         } catch (DataIntegrityViolationException e) {

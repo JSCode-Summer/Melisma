@@ -31,6 +31,9 @@ public class UserDto {
     @Setter
     private UUID salt;
 
+    @Setter
+    private String role;
+
     private LocalDateTime createdAt;
 
     @Setter
