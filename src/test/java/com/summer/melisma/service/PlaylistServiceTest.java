@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 
 import com.summer.melisma.model.playlists.dto.DetailDto;
 import com.summer.melisma.model.playlists.dto.PlaylistDetailDto;
+import com.summer.melisma.model.playlists.dto.PlaylistDto;
 import com.summer.melisma.model.playlists.entity.PlaylistEntity;
 import com.summer.melisma.model.playlists.repository.PlaylistRepository;
 import com.summer.melisma.model.playlists.vo.PlaylistVo;
@@ -238,11 +239,10 @@ public class PlaylistServiceTest {
             .createdBy(userId)
             .build();
 
-        // when
         playlistRepository.save(playlistEntity);
         Optional<PlaylistEntity> playlistOpt = playlistRepository.findById(playlistId);
         Assertions.assertThat(playlistOpt.get().getId()).isEqualTo(playlistId);
-
+            
         // when
         playlistService.delete(playlistId);
 
@@ -250,5 +250,126 @@ public class PlaylistServiceTest {
         org.junit.jupiter.api.Assertions.assertThrows(NullPointerException.class,
         () -> playlistService.search(playlistId));
     }
+
+    @Test
+    @DisplayName("플레이리스트 단일 수정")
+    void 플레이리스트_단일수정() {
+        // given
+        List<DetailDto> details = new ArrayList<>();
+        
+        for(int i = 0; i < 3; i++) {
+            UUID detailId = UUID.randomUUID();
+            UUID musicId = UUID.randomUUID();
+
+            DetailDto detail = DetailDto.builder()
+                .id(detailId)
+                .musicId(musicId)
+                .build();
+
+            details.add(detail);
+        }
+
+        PlaylistDetailDto playlistDetail = PlaylistDetailDto.builder().details(details).build();
+
+        UUID playlistId = UUID.randomUUID();
+        UUID userId = UUID.randomUUID();
+
+        PlaylistEntity playlistEntity = PlaylistEntity.builder()
+            .id(playlistId)
+            .playlistDetail(playlistDetail)
+            .createdAt(LocalDateTime.now())
+            .updatedAt(null)
+            .createdBy(userId)
+            .build();
+
+        // when
+        PlaylistEntity savedEntity = playlistRepository.save(playlistEntity);
+        
+        details = new ArrayList<>();
+        
+        for(int i = 0; i < 3; i++) {
+            UUID detailId = UUID.randomUUID();
+            UUID musicId = UUID.randomUUID();
+
+            DetailDto detail = DetailDto.builder()
+                .id(detailId)
+                .musicId(musicId)
+                .build();
+
+            details.add(detail);
+        }
+
+        PlaylistDetailDto updatedPlaylistDetail = PlaylistDetailDto.builder().details(details).build();
+        savedEntity.setPlaylistDetail(updatedPlaylistDetail);
+
+        playlistService.update(PlaylistDto.toDto(savedEntity));
+
+        // then
+        Optional<PlaylistEntity> playlistOpt = playlistRepository.findById(playlistId);
+        Assertions.assertThat(playlistOpt.get().getId()).isEqualTo(playlistId);
+        
+        for(int i = 0; i < playlistOpt.get().getPlaylistDetail().getDetails().size(); i++) {
+            Assertions.assertThat(playlistOpt.get().getPlaylistDetail().getDetails().get(i).getId())
+                .isEqualTo(savedEntity.getPlaylistDetail().getDetails().get(i).getId());
+        }
+        for(int i = 0; i < playlistOpt.get().getPlaylistDetail().getDetails().size(); i++) {
+            Assertions.assertThat(playlistOpt.get().getPlaylistDetail().getDetails().get(i).getId())
+                .isNotEqualTo(playlistDetail.getDetails().get(i).getId());
+        }
+
+        Assertions.assertThat(playlistEntity.getCreatedAt()).isBefore(playlistOpt.get().getUpdatedAt());
+    }
     
+    @Test
+    @DisplayName("플레이리스트 단일 일부 수정")
+    void 플레이리스트_단일일부수정() {
+        // given
+        List<DetailDto> details = new ArrayList<>();
+        
+        for(int i = 0; i < 3; i++) {
+            UUID detailId = UUID.randomUUID();
+            UUID musicId = UUID.randomUUID();
+
+            DetailDto detail = DetailDto.builder()
+                .id(detailId)
+                .musicId(musicId)
+                .build();
+
+            details.add(detail);
+        }
+
+        PlaylistDetailDto playlistDetail = PlaylistDetailDto.builder().details(details).build();
+
+        UUID playlistId = UUID.randomUUID();
+        UUID userId = UUID.randomUUID();
+
+        PlaylistEntity playlistEntity = PlaylistEntity.builder()
+            .id(playlistId)
+            .playlistDetail(playlistDetail)
+            .createdAt(LocalDateTime.now())
+            .updatedAt(null)
+            .createdBy(userId)
+            .build();
+
+        // when
+        PlaylistEntity savedEntity = playlistRepository.save(playlistEntity);
+        
+        details = new ArrayList<>();
+
+        UUID changedMusicId = UUID.randomUUID();
+        savedEntity.getPlaylistDetail().getDetails().get(0).setMusicId(changedMusicId);
+        playlistService.change(PlaylistDto.toDto(savedEntity));
+
+        // then
+        Optional<PlaylistEntity> playlistOpt = playlistRepository.findById(playlistId);
+        Assertions.assertThat(playlistOpt.get().getId()).isEqualTo(playlistId);
+        
+        Assertions.assertThat(playlistOpt.get().getPlaylistDetail().getDetails().get(0).getMusicId())
+                .isEqualTo(changedMusicId);
+
+        System.out.println("c " + playlistEntity.getCreatedAt());
+        System.out.println("u " + playlistEntity.getUpdatedAt());
+
+        Assertions.assertThat(playlistEntity.getCreatedAt()).isBefore(playlistOpt.get().getUpdatedAt());
+    }
 }
