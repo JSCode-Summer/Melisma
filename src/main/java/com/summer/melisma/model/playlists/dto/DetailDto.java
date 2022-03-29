@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
@@ -12,5 +13,6 @@ import lombok.ToString;
 public class DetailDto {
     // TODO :: 필드 추가
     private UUID id;
+    @Setter
     private UUID musicId;
 }

@@ -42,7 +42,7 @@ public class PlaylistDto {
      * @param dto : PlaylistEntity
      * @return PlaylistDto
      */
-    public static PlaylistDto toEntity(PlaylistEntity entity) {
+    public static PlaylistDto toDto(PlaylistEntity entity) {
         PlaylistDto dto = PlaylistDto.builder()
             .id(entity.getId())
             .playlistDetail(entity.getPlaylistDetail())

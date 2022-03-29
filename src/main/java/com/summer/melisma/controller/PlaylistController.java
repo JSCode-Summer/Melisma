@@ -11,8 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,4 +68,29 @@ public class PlaylistController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestBody PlaylistDto dto) {
+        String message = "success";
+
+        try {
+            playlistService.update(dto);
+        } catch (NullPointerException e) {
+            message = "not found";
+        }
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+ 
+    @PatchMapping("/change")
+    public ResponseEntity<?> change(@RequestBody PlaylistDto dto) {
+        String message = "success";
+
+        try {
+            playlistService.change(dto);
+        } catch (NullPointerException e) {
+            message = "not found";
+        }
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
 }

@@ -79,10 +79,6 @@ public class PlaylistService {
      * @throws NullPointerException
      */
     public void delete(UUID id) {
-        // playlistRepository.findById(id).ifPresent(entity -> {
-        //     playlistRepository.delete(entity);
-        // });
-
         Optional<PlaylistEntity> entityOpt = playlistRepository.findById(id);
 
         if(entityOpt.isPresent()) {
@@ -90,5 +86,23 @@ public class PlaylistService {
         }else {
             throw new NullPointerException();
         }
+    }
+
+    public void update(PlaylistDto dto) {
+        playlistRepository.findById(dto.getId()).ifPresentOrElse(entity -> {
+            entity.setPlaylistDetail(dto.getPlaylistDetail()).setUpdatedAt(LocalDateTime.now());
+            playlistRepository.save(entity);
+        }, null);;
+    }
+
+    public void change(PlaylistDto dto) {
+        playlistRepository.findById(dto.getId()).ifPresentOrElse(entity -> {
+            if(dto.getPlaylistDetail() != null) {
+                entity.setPlaylistDetail(dto.getPlaylistDetail());
+            }
+
+            entity.setUpdatedAt(LocalDateTime.now());
+            playlistRepository.save(entity);
+        }, null);
     }
 }
