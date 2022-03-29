@@ -97,6 +97,44 @@ public class MusicServiceTest {
         assertThat(musicService.isEmpty(id));
     }
 
+    @Test
+    public void 일부_수정_테스트(){
+        //given
+        MusicVo vo = createForTest();
+        UUID id = vo.getId();
+
+        MusicDto dto = MusicDto.builder()
+                .musicUrl("url").build();
+        //when
+        musicService.change(id, dto);
+
+        //then
+        assertThat(musicService.search(id).getMusicUrl()).isEqualTo("url");
+    }
+
+    @Test
+    public void 전체_수정_테스트(){
+        //given
+        String testStr = "new url";
+        int testInt = 200;
+        MusicVo vo = createForTest();
+        UUID id = vo.getId();
+
+        MusicDto musicDto = MusicDto.builder()
+                .id(id)
+                .musicUrl(testStr)
+                .views(testInt)
+                .createdBy(userRepository.findByCid(100l).get().getId()).build();
+
+        //when
+        MusicVo updatedMusic = musicService.update(musicDto);
+
+        //then
+        assertThat(musicService.search(id).getMusicUrl()).isEqualTo(updatedMusic.getMusicUrl());
+        assertThat(musicService.search(id).getViews()).isEqualTo(updatedMusic.getViews());
+
+    }
+
 
     public MusicVo createForTest(){
         UserEntity userEntity = userRepository.findByCid(100l).get();
