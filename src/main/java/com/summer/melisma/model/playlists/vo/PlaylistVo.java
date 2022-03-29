@@ -1,10 +1,10 @@
-package com.summer.melisma.model.vo;
+package com.summer.melisma.model.playlists.vo;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import com.summer.melisma.model.dto.PlaylistDetailDto;
-import com.summer.melisma.model.entity.PlaylistEntity;
+import com.summer.melisma.model.playlists.dto.PlaylistDetailDto;
+import com.summer.melisma.model.playlists.entity.PlaylistEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

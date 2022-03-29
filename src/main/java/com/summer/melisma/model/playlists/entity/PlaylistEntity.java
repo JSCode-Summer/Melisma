@@ -1,4 +1,4 @@
-package com.summer.melisma.model.entity;
+package com.summer.melisma.model.playlists.entity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -11,8 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.summer.melisma.model.dto.PlaylistDetailDto;
-import com.summer.melisma.model.dto.PlaylistDto;
+import com.summer.melisma.model.playlists.dto.PlaylistDetailDto;
+import com.summer.melisma.model.playlists.dto.PlaylistDto;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 
 import org.hibernate.annotations.Type;

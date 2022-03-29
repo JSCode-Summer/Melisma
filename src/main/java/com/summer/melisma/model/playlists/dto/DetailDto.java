@@ -1,4 +1,4 @@
-package com.summer.melisma.model.dto;
+package com.summer.melisma.model.playlists.dto;
 
 import java.util.UUID;
 
