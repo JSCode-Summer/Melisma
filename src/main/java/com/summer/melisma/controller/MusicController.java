@@ -26,13 +26,13 @@ public class MusicController {
 
     @GetMapping("/searchList")
     public ResponseEntity searchList(){
-        List<MusicVo> vos = musicService.readAll();
+        List<MusicVo> vos = musicService.searchList();
         return ResponseEntity.ok(vos);
     }
 
     @GetMapping("/search/{id}")
     public ResponseEntity search(@PathVariable UUID id){
-        MusicVo vo = musicService.readOne(id);
+        MusicVo vo = musicService.search(id);
         return ResponseEntity.ok(vo);
 
     }

@@ -25,7 +25,7 @@ public class MusicService {
         return vo;
     }
 
-    public List<MusicVo> readAll(){
+    public List<MusicVo> searchList(){
         List<MusicEntity> entities = musicRepository.findAll();
         List<MusicVo> vos = new ArrayList<>();
         for (MusicEntity entity: entities){
@@ -35,7 +35,7 @@ public class MusicService {
         return vos;
     }
 
-    public MusicVo readOne(UUID id){
+    public MusicVo search(UUID id){
         MusicEntity entity = musicRepository.findById(id).get();
         return MusicVo.toVo(MusicDto.toDto(entity));
     }
