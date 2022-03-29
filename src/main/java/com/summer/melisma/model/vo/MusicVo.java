@@ -54,6 +54,7 @@ public class MusicVo {
         MusicVo toVo = MusicVo.builder()
                 .id(dto.getId())
                 .musicUrl(dto.getMusicUrl())
+                .views(dto.getViews())
                 .createdAt(dto.getCreatedAt())
                 .updatedAt(dto.getUpdatedAt())
                 .createdBy(dto.getCreatedBy())
