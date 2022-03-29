@@ -35,7 +35,7 @@ public class MusicServiceTest {
         MusicVo vo = createForTest();
 
         //when
-        List<MusicVo> musics = musicService.readAll();
+        List<MusicVo> musics = musicService.searchList();
 
         //then
         MusicVo firstMusic = musics.get(0);
@@ -56,7 +56,7 @@ public class MusicServiceTest {
         }
 
         //when
-        List<MusicVo> vos = musicService.readAll();
+        List<MusicVo> vos = musicService.searchList();
 
 
         //then
@@ -73,7 +73,7 @@ public class MusicServiceTest {
         MusicVo vo = createForTest();
 
         //when
-        MusicVo findVo = musicService.readOne(vo.getId());
+        MusicVo findVo = musicService.search(vo.getId());
 
         //then
         System.out.println(">>>>> vo createdBy = " + vo.getCreatedBy());
@@ -142,7 +142,7 @@ public class MusicServiceTest {
         MusicDto musicDto = MusicDto.builder()
                 .id(id)
                 .musicUrl("")
-                .views(0)
+                .views(10)
                 .createdBy(userEntity.getId()).build();
 
         return musicService.create(musicDto);
