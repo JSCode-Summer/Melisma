@@ -1,5 +1,6 @@
 package com.summer.melisma.service;
 
+import com.summer.melisma.mapper.MusicMapper;
 import com.summer.melisma.model.dto.MusicDto;
 import com.summer.melisma.model.entity.MusicEntity;
 import com.summer.melisma.model.vo.MusicVo;
@@ -44,6 +45,22 @@ public class MusicService {
 
     public void delete(UUID id){
         musicRepository.deleteById(id);
+    }
+
+    public MusicVo update(MusicDto dto){
+        MusicEntity entity = musicRepository.findById(dto.getId()).get();
+        musicMapper.updateMusicEntityFromDto(dto, entity);
+        musicRepository.save(entity);
+
+        return MusicVo.toVo(MusicDto.toDto(entity));
+    }
+
+    public MusicVo change(UUID id, MusicDto dto){
+        MusicEntity entity = musicRepository.findById(id).get();
+//        entity = musicMapper.musicDtoToMusicEntity(dto);
+        musicMapper.changeMusicEntityFromDto(dto, entity);
+        musicRepository.save(entity);
+        return MusicVo.toVo(MusicDto.toDto(entity));
     }
 
     public boolean isEmpty(UUID id){

@@ -1,6 +1,7 @@
 package com.summer.melisma.controller;
 
 import com.summer.melisma.model.dto.MusicDto;
+import com.summer.melisma.model.entity.MusicEntity;
 import com.summer.melisma.model.vo.MusicVo;
 import com.summer.melisma.service.MusicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,20 @@ public class MusicController {
         musicService.delete(id);
 
         return ResponseEntity.ok("Music is deleted");
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity update(@RequestBody MusicDto dto){
+        MusicVo vo = musicService.update(dto);
+
+        return ResponseEntity.ok(vo);
+    }
+
+    @PatchMapping("/change/{id}")
+    public ResponseEntity change(@PathVariable UUID id, @RequestBody MusicDto dto){
+        MusicVo vo = musicService.change(id, dto);
+
+        return ResponseEntity.ok(vo);
     }
 
 
