@@ -367,9 +367,6 @@ public class PlaylistServiceTest {
         Assertions.assertThat(playlistOpt.get().getPlaylistDetail().getDetails().get(0).getMusicId())
                 .isEqualTo(changedMusicId);
 
-        System.out.println("c " + playlistEntity.getCreatedAt());
-        System.out.println("u " + playlistEntity.getUpdatedAt());
-
         Assertions.assertThat(playlistEntity.getCreatedAt()).isBefore(playlistOpt.get().getUpdatedAt());
     }
 }
