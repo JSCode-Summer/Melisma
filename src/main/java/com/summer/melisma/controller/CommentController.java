@@ -40,12 +40,7 @@ public class CommentController {
 
         return new ResponseEntity<>(vos, HttpStatus.OK);
     }
-    @GetMapping("/searchList/{musicId}")
-    public ResponseEntity<?> searchList(@PathVariable UUID musicId) {
-        List<CommentVo> vos = commentService.searchListByMusicId(musicId);
 
-        return new ResponseEntity<>(vos, HttpStatus.OK);
-    }
     @GetMapping("/search/{id}")
     public ResponseEntity<?> search(@PathVariable UUID id) {
         CommentVo vo = new CommentVo();
@@ -70,54 +65,12 @@ public class CommentController {
 
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
-    @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable UUID id, @RequestBody CommentDto dto) {
-        CommentVo vo = new CommentVo();
-        String message = "success";
-        try{
-            vo = commentService.search(id);
-            if(vo.getCreatedBy().equals(dto.getCreatedBy())){
-                commentService.update(id,dto);
-               
-            }else{
-                message = "no atuthentification";
-            }
-        } catch (NullPointerException e) {
-            vo = null;
-        }
-
-
-        return new ResponseEntity<>(message, HttpStatus.OK);
+    @PutMapping("/update")
+    public ResponseEntity<?> update( @RequestBody CommentDto dto) {
+        return new ResponseEntity<>(commentService.update(dto), HttpStatus.OK);
     }
-    @PatchMapping("/update/{id}")
-    public ResponseEntity<?> updatePart(@PathVariable UUID id, @RequestBody CommentDto dto) {
-        CommentVo vo = new CommentVo();
-        String message = "success";
-        try{
-            vo = commentService.search(id);
-            if(vo.getCreatedBy().equals(dto.getCreatedBy())){
-                if(dto.getCreatedAt()==null){
-                    dto.setCreatedAt(vo.getCreatedAt());
-                }
-                if(dto.getContent().isEmpty()|| dto.getContent()==null){
-                    dto.setContent(vo.getContent());
-                }
-                if(dto.getMusicId()==null){
-                    dto.setMusicId(vo.getMusicId());
-                }
-                if(dto.getUpdatedAt()==null){
-                    dto.setUpdatedAt(vo.getUpdatedAt());
-                }
-                commentService.update(id,dto);
-               
-            }else{
-                message = "no atuthentification";
-            }
-        } catch (NullPointerException e) {
-            vo = null;
-        }
-
-
-        return new ResponseEntity<>(message, HttpStatus.OK);
+    @PatchMapping("/change")
+    public ResponseEntity<?> change( @RequestBody CommentDto dto) {
+        return new ResponseEntity<>(commentService.change(dto), HttpStatus.OK);
     }
 }

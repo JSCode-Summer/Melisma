@@ -72,13 +72,29 @@ public class CommentService {
     }
 
 
-    public void update(UUID id, CommentDto dto) {
-        dto.setId(id);
-        CommentEntity entity = CommentEntity.toEntity(dto);
+    public CommentEntity update( CommentDto dto) {
+        CommentEntity entity = commentRepository.findById(dto.getId()).get();
+        
+        entity.setContent(dto.getContent()).setUpdatedAt(LocalDateTime.now());
+
+        commentRepository.save(entity);
+        return entity;
+    }
+
+
+    public CommentEntity change(CommentDto dto) {
+        CommentEntity entity = commentRepository.findById(dto.getId()).get();
+        
+        if(dto.getContent()!=null){
+            entity.setContent(dto.getContent());
+        }
+        if(dto.getMusicId()!=null){
+            entity.setMusicId(dto.getMusicId());
+        }
         entity.setUpdatedAt(LocalDateTime.now());
 
         commentRepository.save(entity);
-
+        return entity;
     }
 
 

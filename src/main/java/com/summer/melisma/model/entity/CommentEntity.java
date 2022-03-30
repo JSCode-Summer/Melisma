@@ -30,7 +30,7 @@ import lombok.experimental.Accessors;
 // @ToString(exclude = {"createdBy"})
 @ToString
 @Accessors(chain = true)
-@Table(name = "comment")
+@Table(name = "comments")
 public class CommentEntity {
 
     @Id
