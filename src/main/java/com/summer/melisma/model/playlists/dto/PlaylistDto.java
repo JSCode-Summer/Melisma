@@ -1,9 +1,9 @@
-package com.summer.melisma.model.dto;
+package com.summer.melisma.model.playlists.dto;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import com.summer.melisma.model.entity.PlaylistEntity;
+import com.summer.melisma.model.playlists.entity.PlaylistEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +25,7 @@ public class PlaylistDto {
     @Setter
     private PlaylistDetailDto playlistDetail;
 
-    @Setter
+    // @Setter
     private LocalDateTime createdAt;
 
     @Setter
@@ -42,7 +42,7 @@ public class PlaylistDto {
      * @param dto : PlaylistEntity
      * @return PlaylistDto
      */
-    public static PlaylistDto toEntity(PlaylistEntity entity) {
+    public static PlaylistDto toDto(PlaylistEntity entity) {
         PlaylistDto dto = PlaylistDto.builder()
             .id(entity.getId())
             .playlistDetail(entity.getPlaylistDetail())

@@ -1,9 +1,9 @@
-package com.summer.melisma.model.repository;
+package com.summer.melisma.model.playlists.repository;
 
 import java.util.Optional;
 import java.util.UUID;
 
-import com.summer.melisma.model.entity.PlaylistEntity;
+import com.summer.melisma.model.playlists.entity.PlaylistEntity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
