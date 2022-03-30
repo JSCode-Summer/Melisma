@@ -30,9 +30,7 @@ public class LikeService {
      */
     public void create(LikeDto dto) {
         LikeEntity entity = LikeEntity.toEntity(dto);
-        
-        UUID userId = UUID.randomUUID();    // TODO:: 실제 userId로 변경
-        entity.setCreatedAt(LocalDateTime.now()).setCreatedBy(userId);
+        entity.setCreatedAt(LocalDateTime.now()).setCreatedBy(dto.getId());
 
         likeRepository.save(entity);
     }

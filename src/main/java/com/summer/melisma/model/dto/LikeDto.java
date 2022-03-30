@@ -29,9 +29,6 @@ public class LikeDto {
     private LocalDateTime createdAt;
 
     @Setter
-    private LocalDateTime updatedAt;
-
-    @Setter
     private UUID createdBy;
 
     public static LikeDto toEntity(LikeEntity entity) {
