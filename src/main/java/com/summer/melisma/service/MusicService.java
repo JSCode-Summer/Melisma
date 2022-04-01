@@ -19,6 +19,7 @@ public class MusicService {
 
     @Autowired
     MusicMapper musicMapper;
+
     public MusicVo create(MusicDto dto){
         MusicEntity entity = MusicEntity.toEntity(dto);
         musicRepository.save(entity);
@@ -47,20 +48,32 @@ public class MusicService {
         musicRepository.deleteById(id);
     }
 
-    public MusicVo update(MusicDto dto){
-        MusicEntity entity = musicRepository.findById(dto.getId()).get();
-        musicMapper.updateMusicEntityFromDto(dto, entity);
-        musicRepository.save(entity);
-
-        return MusicVo.toVo(MusicDto.toDto(entity));
+    public void update(MusicDto dto){
+        musicRepository.findById(dto.getId()).ifPresentOrElse(musicEntity -> {
+            MusicEntity newEntity = MusicEntity.toEntity(dto);
+            musicEntity.setMusicUrl(newEntity.getMusicUrl());
+            musicEntity.setViews(newEntity.getViews());
+            musicEntity.setCreatedBy(newEntity.getCreatedBy());
+            musicRepository.save(musicEntity);
+        }, null);;
     }
 
-    public MusicVo change(UUID id, MusicDto dto){
-        MusicEntity entity = musicRepository.findById(id).get();
-//        entity = musicMapper.musicDtoToMusicEntity(dto);
-        musicMapper.changeMusicEntityFromDto(dto, entity);
-        musicRepository.save(entity);
-        return MusicVo.toVo(MusicDto.toDto(entity));
+    public void change(UUID id, MusicDto dto){
+        musicRepository.findById(id).ifPresentOrElse(musicEntity -> {
+            MusicEntity newEntity = MusicEntity.toEntity(dto);
+            if(newEntity.getMusicUrl() != null){
+                musicEntity.setMusicUrl(newEntity.getMusicUrl());
+            }
+            if(newEntity.getViews() != null){
+                musicEntity.setViews(newEntity.getViews());
+            }
+            if(newEntity.getCreatedBy() != null){
+                musicEntity.setCreatedBy(newEntity.getCreatedBy());
+            }
+
+            musicRepository.save(musicEntity);
+
+        }, null );
     }
 
     public boolean isEmpty(UUID id){

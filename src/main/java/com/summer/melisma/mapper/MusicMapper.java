@@ -10,8 +10,8 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 @Mapper(componentModel = "spring")
 public interface MusicMapper {
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void changeMusicEntityFromDto(MusicDto musicDto, @MappingTarget MusicEntity musicEntity);
-
-    void updateMusicEntityFromDto(MusicDto musicDto, @MappingTarget MusicEntity musicEntity);
+//    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+//    void changeMusicEntityFromDto(MusicDto musicDto, @MappingTarget MusicEntity musicEntity);
+//
+//    void updateMusicEntityFromDto(MusicDto musicDto, @MappingTarget MusicEntity musicEntity);
 }

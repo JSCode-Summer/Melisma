@@ -3,7 +3,6 @@ package com.summer.melisma.service;
 import com.summer.melisma.model.dto.MusicDto;
 import com.summer.melisma.model.vo.MusicVo;
 import com.summer.melisma.model.entity.UserEntity;
-import com.summer.melisma.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,8 +22,6 @@ public class MusicServiceTest {
     @Autowired
     MusicService musicService;
 
-    @Autowired
-    UserRepository userRepository;
 
 
 
@@ -104,7 +101,8 @@ public class MusicServiceTest {
         UUID id = vo.getId();
 
         MusicDto dto = MusicDto.builder()
-                .musicUrl("url").build();
+                .musicUrl("url")
+                .views(100).build();
         //when
         musicService.change(id, dto);
 
@@ -124,26 +122,25 @@ public class MusicServiceTest {
                 .id(id)
                 .musicUrl(testStr)
                 .views(testInt)
-                .createdBy(userRepository.findByCid(100l).get().getId()).build();
+                .createdBy(UUID.randomUUID()).build();
 
         //when
-        MusicVo updatedMusic = musicService.update(musicDto);
+        musicService.update(musicDto);
 
         //then
-        assertThat(musicService.search(id).getMusicUrl()).isEqualTo(updatedMusic.getMusicUrl());
-        assertThat(musicService.search(id).getViews()).isEqualTo(updatedMusic.getViews());
+        assertThat(musicService.search(id).getMusicUrl()).isEqualTo(testStr);
+        assertThat(musicService.search(id).getViews()).isEqualTo(testInt);
 
     }
 
 
     public MusicVo createForTest(){
-        UserEntity userEntity = userRepository.findByCid(100l).get();
         UUID id = UUID.randomUUID();
         MusicDto musicDto = MusicDto.builder()
                 .id(id)
-                .musicUrl("")
+                .musicUrl("testStr")
                 .views(10)
-                .createdBy(userEntity.getId()).build();
+                .createdBy(UUID.randomUUID()).build();
 
         return musicService.create(musicDto);
     }

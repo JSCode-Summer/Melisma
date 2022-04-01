@@ -5,6 +5,7 @@ import com.summer.melisma.model.entity.MusicEntity;
 import com.summer.melisma.model.vo.MusicVo;
 import com.summer.melisma.service.MusicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -47,16 +48,28 @@ public class MusicController {
 
     @PutMapping("/update")
     public ResponseEntity update(@RequestBody MusicDto dto){
-        MusicVo vo = musicService.update(dto);
+        String message = "success";
 
-        return ResponseEntity.ok(vo);
+        try {
+            musicService.update(dto);
+        } catch (NullPointerException e) {
+            message = "not found";
+        }
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @PatchMapping("/change/{id}")
     public ResponseEntity change(@PathVariable UUID id, @RequestBody MusicDto dto){
-        MusicVo vo = musicService.change(id, dto);
+        String message = "success";
 
-        return ResponseEntity.ok(vo);
+        try {
+            musicService.change(id, dto);
+        } catch (NullPointerException e) {
+            message = "not found";
+        }
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
 
