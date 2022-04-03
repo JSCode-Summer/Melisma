@@ -28,12 +28,16 @@ public class UserDto {
 
     private String salt;
 
+    private String role;
+
+
     public static UserDto toDto(UserEntity entity) {
         UserDto dto = UserDto.builder()
                 .id(entity.getId())
                 .username(entity.getUsername())
                 .password(entity.getPassword())
                 .salt(entity.getSalt())
+                .role(entity.getRole())
                 .build();
         return dto;
     }

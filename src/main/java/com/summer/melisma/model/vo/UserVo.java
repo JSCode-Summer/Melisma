@@ -3,13 +3,16 @@ package com.summer.melisma.model.vo;
 import com.summer.melisma.model.dto.UserDto;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.Objects;
 import java.util.UUID;
 
 @Builder
 @Data
-public class UserVo {
+public class UserVo{
     private final UUID id;
 
     private final String username;
@@ -28,18 +31,4 @@ public class UserVo {
 
         return toVo;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserVo userVo = (UserVo) o;
-        return Objects.equals(id, userVo.id) && Objects.equals(password, userVo.password) && Objects.equals(salt, userVo.salt);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, password, salt);
-    }
-
 }
