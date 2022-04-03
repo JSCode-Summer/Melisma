@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PlaylistService {
     private final PlaylistRepository playlistRepository;
+    private final UserService userService;
 
     /**
      * <b>단일 playlist 생성</b>
@@ -27,10 +28,14 @@ public class PlaylistService {
      * @param dto
      */
     public void create(PlaylistDto dto) {
-        PlaylistEntity entity = PlaylistEntity.toEntity(dto);
-        
-        UUID userId = UUID.randomUUID();    // TODO:: 실제 userId로 변경
-        entity.setCreatedAt(LocalDateTime.now()).setCreatedBy(userId);
+        UUID userId = userService.getUserId();     // login된 user의 id설정
+
+        PlaylistEntity entity = PlaylistEntity.builder()
+            .id(UUID.randomUUID())
+            .playlistDetail(dto.getPlaylistDetail())
+            .createdAt(LocalDateTime.now())
+            .createdBy(userId)
+            .build();
 
         playlistRepository.save(entity);
     }
@@ -44,8 +49,21 @@ public class PlaylistService {
      * @see PlaylistVo#toVo
      */
     public List<PlaylistVo> searchList() {
-        // TODO::userId에 대응되는 데이터만 조회하도록 변경
         List<PlaylistEntity> entities = playlistRepository.findAll();
+        return entities.stream().map(entity -> PlaylistVo.toVo(entity)).collect(Collectors.toList());
+    }
+
+    /**
+     * <b>현재 user가 등록한 playlist 조회</b>
+     * <p>
+     * 
+     * @return List[PlaylistVo]
+     * @see PlaylistRepository#findByCreatedBy
+     * @see PlaylistVo#toVo
+     */
+    public List<PlaylistVo> searchListByUser() {
+        UUID userId = userService.getUserId();
+        List<PlaylistEntity> entities = playlistRepository.findByCreatedBy(userId);
         return entities.stream().map(entity -> PlaylistVo.toVo(entity)).collect(Collectors.toList());
     }
 
