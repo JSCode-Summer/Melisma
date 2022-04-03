@@ -1,9 +1,9 @@
-package com.summer.melisma.model.users.dto;
+package com.summer.melisma.model.dto;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import com.summer.melisma.model.users.entity.UserEntity;
+import com.summer.melisma.model.entity.PlaylistEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,33 +19,36 @@ import lombok.experimental.Accessors;
 @Accessors(chain=true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
+public class PlaylistDto {
     private UUID id;
 
     @Setter
-    private String username;
+    private PlaylistDetailDto playlistDetail;
 
-    @Setter
-    private String password;
-
-    @Setter
-    private UUID salt;
-
-    @Setter
-    private String role;
-
+    // @Setter
     private LocalDateTime createdAt;
 
     @Setter
     private LocalDateTime updatedAt;
 
-    public static UserDto toDto(UserEntity entity) {
-        UserDto dto = UserDto.builder()
+    @Setter
+    private UUID createdBy;
+
+    /**
+     * <b>Convert Method</b>
+     * <p>
+     * PlaylistEntity => PlaylistDto
+     * 
+     * @param dto : PlaylistEntity
+     * @return PlaylistDto
+     */
+    public static PlaylistDto toDto(PlaylistEntity entity) {
+        PlaylistDto dto = PlaylistDto.builder()
             .id(entity.getId())
-            .username(entity.getUsername())
-            .password(entity.getPassword())
+            .playlistDetail(entity.getPlaylistDetail())
             .createdAt(entity.getCreatedAt())
             .updatedAt(entity.getUpdatedAt())
+            .createdBy(entity.getCreatedBy())
             .build();
 
         return dto;

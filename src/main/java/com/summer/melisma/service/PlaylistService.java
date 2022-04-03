@@ -6,10 +6,10 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.summer.melisma.model.playlists.dto.PlaylistDto;
-import com.summer.melisma.model.playlists.entity.PlaylistEntity;
-import com.summer.melisma.model.playlists.repository.PlaylistRepository;
-import com.summer.melisma.model.playlists.vo.PlaylistVo;
+import com.summer.melisma.model.dto.PlaylistDto;
+import com.summer.melisma.model.entity.PlaylistEntity;
+import com.summer.melisma.model.vo.PlaylistVo;
+import com.summer.melisma.repository.PlaylistRepository;
 
 import org.springframework.stereotype.Service;
 

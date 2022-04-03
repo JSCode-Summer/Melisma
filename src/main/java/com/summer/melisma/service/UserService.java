@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.summer.melisma.model.users.dto.LoginReqUserDto;
-import com.summer.melisma.model.users.dto.UserDto;
-import com.summer.melisma.model.users.entity.UserEntity;
-import com.summer.melisma.model.users.repository.UserRepository;
+import com.summer.melisma.model.dto.LoginReqUserDto;
+import com.summer.melisma.model.dto.UserDto;
+import com.summer.melisma.model.entity.UserEntity;
+import com.summer.melisma.repository.UserRepository;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;

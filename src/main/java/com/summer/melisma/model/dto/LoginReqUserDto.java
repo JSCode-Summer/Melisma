@@ -1,4 +1,4 @@
-package com.summer.melisma.model.users.dto;
+package com.summer.melisma.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

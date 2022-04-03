@@ -16,7 +16,7 @@ public class UserVo {
 
     private final String password;
 
-    private final String salt;
+    private final UUID salt;
 
     public static UserVo toVo(UserDto dto) {
         UserVo toVo = UserVo.builder()

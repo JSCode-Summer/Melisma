@@ -1,6 +1,6 @@
 package com.summer.melisma.controller;
 
-import com.summer.melisma.model.users.dto.LoginReqUserDto;
+import com.summer.melisma.model.dto.LoginReqUserDto;
 import com.summer.melisma.service.UserService;
 
 import org.springframework.dao.DataIntegrityViolationException;

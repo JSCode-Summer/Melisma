@@ -2,7 +2,6 @@ package com.summer.melisma.service;
 
 import com.summer.melisma.model.dto.MusicDto;
 import com.summer.melisma.model.vo.MusicVo;
-import com.summer.melisma.model.entity.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,9 +20,6 @@ public class MusicServiceTest {
 
     @Autowired
     MusicService musicService;
-
-
-
 
     @Test
     public void 생성_테스트() {
