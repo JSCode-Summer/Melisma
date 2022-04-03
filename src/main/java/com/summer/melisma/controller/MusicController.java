@@ -59,12 +59,12 @@ public class MusicController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @PatchMapping("/change/{id}")
-    public ResponseEntity change(@PathVariable UUID id, @RequestBody MusicDto dto){
+    @PatchMapping("/change")
+    public ResponseEntity change(@RequestBody MusicDto dto){
         String message = "success";
 
         try {
-            musicService.change(id, dto);
+            musicService.change(dto);
         } catch (NullPointerException e) {
             message = "not found";
         }
