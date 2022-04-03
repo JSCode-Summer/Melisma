@@ -1,24 +1,18 @@
-package com.summer.melisma.model.playlists.entity;
+package com.summer.melisma.model.entity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.summer.melisma.model.playlists.dto.PlaylistDetailDto;
-import com.summer.melisma.model.playlists.dto.PlaylistDto;
-import com.vladmihalcea.hibernate.type.json.JsonStringType;
+import com.summer.melisma.model.dto.CommentDto;
 
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,9 +30,8 @@ import lombok.experimental.Accessors;
 // @ToString(exclude = {"createdBy"})
 @ToString
 @Accessors(chain = true)
-@TypeDef(name = "json", typeClass = JsonStringType.class)
-@Table(name = "playlists")
-public class PlaylistEntity {
+@Table(name = "comments")
+public class CommentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,38 +42,38 @@ public class PlaylistEntity {
     @Column(name = "id")
     private UUID id;
 
+
     @Setter
-    @Type(type = "json")
-    @Column(name = "playlist", columnDefinition = "json")
-    private PlaylistDetailDto playlistDetail;
+    @Type(type ="text")
+    @Column(name="content",columnDefinition = "TEXT")
+    private String content;
+
+
+    @Setter
+    @Type(type = "uuid-char")
+    @Column(name = "music_id")
+    private UUID musicId;
 
     @Setter
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-    
+
     @Setter
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     
+    
     @Setter
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "created_by")
+    // @ManyToOne
     @Type(type = "uuid-char")
     @Column(name = "created_by")
     private UUID createdBy;
 
-    /**
-     * <b>Convert Method</b>
-     * <p>
-     * PlaylistDto => PlaylistEntity
-     * 
-     * @param dto : PlaylistDto
-     * @return PlaylistEntity
-     */
-    public static PlaylistEntity toEntity(PlaylistDto dto) {
-        PlaylistEntity entity = PlaylistEntity.builder()
+    public static CommentEntity toEntity(CommentDto dto) {
+        CommentEntity entity = CommentEntity.builder()
             .id(dto.getId())
-            .playlistDetail(dto.getPlaylistDetail())
+            .content(dto.getContent())
+            .musicId(dto.getMusicId())
             .createdAt(dto.getCreatedAt())
             .updatedAt(dto.getUpdatedAt())
             .createdBy(dto.getCreatedBy())

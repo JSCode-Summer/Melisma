@@ -8,12 +8,12 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
-import com.summer.melisma.model.playlists.dto.DetailDto;
-import com.summer.melisma.model.playlists.dto.PlaylistDetailDto;
-import com.summer.melisma.model.playlists.dto.PlaylistDto;
-import com.summer.melisma.model.playlists.entity.PlaylistEntity;
-import com.summer.melisma.model.playlists.repository.PlaylistRepository;
-import com.summer.melisma.model.playlists.vo.PlaylistVo;
+import com.summer.melisma.model.dto.DetailDto;
+import com.summer.melisma.model.dto.PlaylistDetailDto;
+import com.summer.melisma.model.dto.PlaylistDto;
+import com.summer.melisma.model.entity.PlaylistEntity;
+import com.summer.melisma.model.vo.PlaylistVo;
+import com.summer.melisma.repository.PlaylistRepository;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

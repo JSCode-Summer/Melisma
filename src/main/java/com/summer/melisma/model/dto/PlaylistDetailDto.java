@@ -1,4 +1,4 @@
-package com.summer.melisma.model.playlists.dto;
+package com.summer.melisma.model.dto;
 
 import java.util.List;
 

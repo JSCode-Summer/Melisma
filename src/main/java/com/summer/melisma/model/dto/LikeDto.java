@@ -1,9 +1,9 @@
 package com.summer.melisma.model.dto;
 
+import com.summer.melisma.model.entity.LikeEntity;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
-
-import com.summer.melisma.model.entity.UserEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,33 +19,24 @@ import lombok.experimental.Accessors;
 @Accessors(chain=true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
+public class LikeDto {
     private UUID id;
 
     @Setter
-    private String username;
+    private UUID musicId;
 
     @Setter
-    private String password;
-
-    @Setter
-    private UUID salt;
-
-    @Setter
-    private String role;
-
     private LocalDateTime createdAt;
 
     @Setter
-    private LocalDateTime updatedAt;
+    private UUID createdBy;
 
-    public static UserDto toDto(UserEntity entity) {
-        UserDto dto = UserDto.builder()
+    public static LikeDto toEntity(LikeEntity entity) {
+        LikeDto dto = LikeDto.builder()
             .id(entity.getId())
-            .username(entity.getUsername())
-            .password(entity.getPassword())
+            .musicId(entity.getMusicId())
             .createdAt(entity.getCreatedAt())
-            .updatedAt(entity.getUpdatedAt())
+            .createdBy(entity.getCreatedBy())
             .build();
 
         return dto;

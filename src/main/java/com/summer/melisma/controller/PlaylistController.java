@@ -3,8 +3,8 @@ package com.summer.melisma.controller;
 import java.util.List;
 import java.util.UUID;
 
-import com.summer.melisma.model.playlists.dto.PlaylistDto;
-import com.summer.melisma.model.playlists.vo.PlaylistVo;
+import com.summer.melisma.model.dto.PlaylistDto;
+import com.summer.melisma.model.vo.PlaylistVo;
 import com.summer.melisma.service.PlaylistService;
 
 import org.springframework.http.HttpStatus;
