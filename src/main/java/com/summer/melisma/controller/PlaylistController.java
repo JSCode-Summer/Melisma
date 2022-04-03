@@ -27,6 +27,12 @@ import lombok.RequiredArgsConstructor;
 public class PlaylistController {
     private final PlaylistService playlistService;
     
+    /**
+     * <b>playlist 생성</b>
+     * 
+     * @param dto : PlaylistDto
+     * @return ResponseEntity
+     */
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody PlaylistDto dto) {
         playlistService.create(dto);
@@ -35,13 +41,12 @@ public class PlaylistController {
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
-    @GetMapping("/searchList")
-    public ResponseEntity<?> searchList() {
-        List<PlaylistVo> vos = playlistService.searchList();
-
-        return new ResponseEntity<>(vos, HttpStatus.OK);
-    }
-
+    /**
+     * <b>id에 대응하는 playlist 조회</b>
+     * 
+     * @param id : UUID
+     * @return ResponseEntity
+     */
     @GetMapping("/search/{id}")
     public ResponseEntity<?> search(@PathVariable UUID id) {
         PlaylistVo vo = new PlaylistVo();
@@ -55,6 +60,36 @@ public class PlaylistController {
         return new ResponseEntity<>(vo, HttpStatus.OK);
     }
 
+    /**
+     * <b>playlist 전체 조회</b>
+     * 
+     * @return ResponseEntity
+     */
+    @GetMapping("/searchList")
+    public ResponseEntity<?> searchList() {
+        List<PlaylistVo> vos = playlistService.searchList();
+
+        return new ResponseEntity<>(vos, HttpStatus.OK);
+    }
+
+    /**
+     * <b>로그인된 user의 playlist 조회</b>
+     * 
+     * @return ResponseEntity
+     */
+    @GetMapping("/searchList/users")
+    public ResponseEntity<?> searchListByUser() {
+        List<PlaylistVo> vos = playlistService.searchListByUser();
+
+        return new ResponseEntity<>(vos, HttpStatus.OK);
+    }
+
+    /**
+     * <b>id에 대응하는 pklaylist 삭제</b>
+     * 
+     * @param id : UUID
+     * @return ResponseEntity
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id) {
         String message = "success";
@@ -68,6 +103,12 @@ public class PlaylistController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
+    /**
+     * <b>playlist 수정</b>
+     * 
+     * @param dto : PlaylistDto
+     * @return ResponseEntity
+     */
     @PutMapping("/update")
     public ResponseEntity<?> update(@RequestBody PlaylistDto dto) {
         String message = "success";
@@ -81,6 +122,12 @@ public class PlaylistController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
  
+    /**
+     * <b>playlist 단일 수정</b>
+     * 
+     * @param dto : PlaylistDto
+     * @return ResponseEntity
+     */
     @PatchMapping("/change")
     public ResponseEntity<?> change(@RequestBody PlaylistDto dto) {
         String message = "success";

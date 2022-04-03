@@ -23,6 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .authorizeRequests()
                     .antMatchers("/users/create").permitAll()
+                    .antMatchers("/login").permitAll()
                     .antMatchers("/").hasRole("USER")
                     .anyRequest().authenticated()      // 나머지 요청은 권한이 있으면 접근 가능
             .and()

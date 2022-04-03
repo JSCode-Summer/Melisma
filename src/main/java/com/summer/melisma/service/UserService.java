@@ -9,12 +9,12 @@ import com.summer.melisma.model.users.dto.UserDto;
 import com.summer.melisma.model.users.entity.UserEntity;
 import com.summer.melisma.model.users.repository.UserRepository;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-// import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -79,5 +79,11 @@ public class UserService implements UserDetailsService {
         // }else {
         //     throw new UsernameNotFoundException(username);
         // }
+    }
+
+    public UUID getUserId() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity userEntity = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(() -> new UsernameNotFoundException(userDetails.getUsername()));
+        return userEntity.getId();
     }
 }
