@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class CommentService {
     private final CommentRepository commentRepository;
 
+    private final UserService userService;
     /**
      * <b>Create Related Method.</b>
      * <p>
@@ -30,7 +31,7 @@ public class CommentService {
     public void create(CommentDto dto) {
         CommentEntity entity = CommentEntity.toEntity(dto);
         
-        UUID userId = UUID.randomUUID();    // TODO:: 실제 userId로 변경
+        UUID userId = userService.getUserId();   // TODO:: 실제 userId로 변경
         entity.setCreatedAt(LocalDateTime.now()).setCreatedBy(userId);
 
         commentRepository.save(entity);
