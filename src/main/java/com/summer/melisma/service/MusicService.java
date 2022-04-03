@@ -22,6 +22,8 @@ public class MusicService {
 
     public MusicVo create(MusicDto dto){
         MusicEntity entity = MusicEntity.toEntity(dto);
+        //TODO User ID 값으로 CreatedBy 설정
+        entity.setCreatedBy(UUID.randomUUID());
         musicRepository.save(entity);
 
         MusicVo vo = MusicVo.toVo(MusicDto.toDto(entity));
@@ -58,8 +60,8 @@ public class MusicService {
         }, null);;
     }
 
-    public void change(UUID id, MusicDto dto){
-        musicRepository.findById(id).ifPresentOrElse(musicEntity -> {
+    public void change(MusicDto dto){
+        musicRepository.findById(dto.getId()).ifPresentOrElse(musicEntity -> {
             MusicEntity newEntity = MusicEntity.toEntity(dto);
             if(newEntity.getMusicUrl() != null){
                 musicEntity.setMusicUrl(newEntity.getMusicUrl());

@@ -41,7 +41,7 @@ public class MusicEntity extends TimeStampEntity {
 //    @Column(name = "updated_at")
 //    private LocalDateTime updatedAt;
 
-    @CreatedBy
+//    @CreatedBy
     @Type(type = "uuid-char")
     @Column(name = "created_by")
     private UUID createdBy;

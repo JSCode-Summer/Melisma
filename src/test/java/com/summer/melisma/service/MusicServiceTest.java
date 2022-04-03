@@ -101,10 +101,11 @@ public class MusicServiceTest {
         UUID id = vo.getId();
 
         MusicDto dto = MusicDto.builder()
+                .id(id)
                 .musicUrl("url")
                 .views(100).build();
         //when
-        musicService.change(id, dto);
+        musicService.change(dto);
 
         //then
         assertThat(musicService.search(id).getMusicUrl()).isEqualTo("url");
