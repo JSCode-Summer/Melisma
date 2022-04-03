@@ -18,12 +18,11 @@ public class MusicService {
     MusicRepository musicRepository;
 
     @Autowired
-    MusicMapper musicMapper;
+    UserService userService;
 
     public MusicVo create(MusicDto dto){
         MusicEntity entity = MusicEntity.toEntity(dto);
-        //TODO User ID 값으로 CreatedBy 설정
-        entity.setCreatedBy(UUID.randomUUID());
+        entity.setCreatedBy(userService.getUserId());
         musicRepository.save(entity);
 
         MusicVo vo = MusicVo.toVo(MusicDto.toDto(entity));
