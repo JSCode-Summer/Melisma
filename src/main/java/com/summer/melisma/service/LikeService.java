@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LikeService {
     private final LikeRepository likeRepository;
+    private final UserService userService;
 
     /**
      * <b>Create Related Method.</b>
@@ -29,8 +30,9 @@ public class LikeService {
      * @param dto
      */
     public void create(LikeDto dto) {
+        UUID userId = userService.getUserId();
         LikeEntity entity = LikeEntity.toEntity(dto);
-        entity.setCreatedAt(LocalDateTime.now()).setCreatedBy(dto.getId());
+        entity.setCreatedAt(LocalDateTime.now()).setCreatedBy(userId);
 
         likeRepository.save(entity);
     }
