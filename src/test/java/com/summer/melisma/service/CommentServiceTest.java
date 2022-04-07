@@ -7,15 +7,22 @@ import java.util.UUID;
 import javax.transaction.Transactional;
 
 import com.summer.melisma.model.dto.CommentDto;
+import com.summer.melisma.model.dto.LoginReqUserDto;
 import com.summer.melisma.model.entity.CommentEntity;
+import com.summer.melisma.model.entity.UserEntity;
 import com.summer.melisma.repository.CommentRepository;
 import com.summer.melisma.model.vo.CommentVo;
 
+import com.summer.melisma.repository.UserRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 @SpringBootTest
@@ -27,6 +34,26 @@ public class CommentServiceTest {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @BeforeEach
+    public void 유저_생성_및_인증(){
+        String username = "users";
+        String password = "password";
+        LoginReqUserDto dto = LoginReqUserDto.builder().username(username).password(password).build();
+
+        userService.create(dto);
+
+        UserEntity user = userRepository.findByUsername(username).get();
+        SecurityContext context = SecurityContextHolder.getContext();
+        context.setAuthentication(new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities()));
+
+    }
 
     @Test
     @DisplayName("코멘트 단일 생성")

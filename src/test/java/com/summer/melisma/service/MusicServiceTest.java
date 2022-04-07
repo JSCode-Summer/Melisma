@@ -1,10 +1,17 @@
 package com.summer.melisma.service;
 
+import com.summer.melisma.model.dto.LoginReqUserDto;
 import com.summer.melisma.model.dto.MusicDto;
+import com.summer.melisma.model.entity.UserEntity;
 import com.summer.melisma.model.vo.MusicVo;
+import com.summer.melisma.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -20,6 +27,26 @@ public class MusicServiceTest {
 
     @Autowired
     MusicService musicService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @BeforeEach
+    public void 유저_생성_및_인증(){
+        String username = "users";
+        String password = "password";
+        LoginReqUserDto dto = LoginReqUserDto.builder().username(username).password(password).build();
+
+        userService.create(dto);
+
+        UserEntity user = userRepository.findByUsername(username).get();
+        SecurityContext context = SecurityContextHolder.getContext();
+        context.setAuthentication(new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities()));
+
+    }
 
     @Test
     public void 생성_테스트() {

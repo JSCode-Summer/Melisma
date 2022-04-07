@@ -9,12 +9,15 @@ import java.util.UUID;
 import javax.transaction.Transactional;
 
 import com.summer.melisma.model.dto.DetailDto;
+import com.summer.melisma.model.dto.LoginReqUserDto;
 import com.summer.melisma.model.dto.PlaylistDetailDto;
 import com.summer.melisma.model.dto.PlaylistDto;
 import com.summer.melisma.model.entity.PlaylistEntity;
+import com.summer.melisma.model.entity.UserEntity;
 import com.summer.melisma.model.vo.PlaylistVo;
 import com.summer.melisma.repository.PlaylistRepository;
 
+import com.summer.melisma.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,6 +28,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 @SpringBootTest
@@ -36,6 +42,25 @@ public class PlaylistServiceTest {
 
     @Autowired
     private PlaylistService playlistService;
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @BeforeEach
+    public void 유저_생성_및_인증(){
+        String username = "users";
+        String password = "password";
+        LoginReqUserDto dto = LoginReqUserDto.builder().username(username).password(password).build();
+
+        userService.create(dto);
+
+        UserEntity user = userRepository.findByUsername(username).get();
+        SecurityContext context = SecurityContextHolder.getContext();
+        context.setAuthentication(new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities()));
+
+    }
 
     // @InjectMocks
     // private PlaylistService mockPlaylistService;
