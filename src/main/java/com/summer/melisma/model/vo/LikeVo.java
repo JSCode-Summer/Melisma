@@ -8,8 +8,10 @@ import com.summer.melisma.model.entity.LikeEntity;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

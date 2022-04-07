@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import com.summer.melisma.model.dto.LikeDto;
 import com.summer.melisma.model.entity.LikeEntity;
-import com.summer.melisma.model.repository.LikeRepository;
+import com.summer.melisma.repository.LikeRepository;
 import com.summer.melisma.model.vo.LikeVo;
 
 import org.springframework.stereotype.Service;
